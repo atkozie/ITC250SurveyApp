@@ -51,11 +51,13 @@ if(mysqli_num_rows($result) > 0)
 {#there are records - present data
 	while($row = mysqli_fetch_assoc($result))
 	{# pull data from associative array
-	   echo '<p>';
-	   echo 'Title: <b>' . $row['Title'] . '</b><br />';
-	   echo 'Description: <b>' . $row['Description'] . '</b><br />';
-       echo '<a href="survey_view.php?id=' . $row['SurveyID'] . '">' . $row['Title'] . '</a><br />';
-	   echo '</p>';
+       echo '<p><a href="survey_list_pager.php">Click here for the paginated list of surveys</a></p>';
+
+        echo '<table border="1" class="table">';
+            echo '<tr><td>Title: <b>' . $row['Title'] . '</b></td></tr>';
+            echo '<tr><td>Description: <b>' . $row['Description'] . '</b></td></tr>';
+            echo '<tr><td><a href="survey_view.php?id=' . $row['SurveyID'] . '">' . $row['Title'] . '</a></td></tr>';
+        echo '</table';
 	}
 }else{#no records
 	echo '<div align="center">Sorry, there are no records that match this query</div>';

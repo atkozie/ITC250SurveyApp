@@ -1,6 +1,6 @@
 <?php
 /**
- * demo_view.php along with demo_list.php provides a sample web application
+ * 
  * 
  * @package nmListView
  * @author Bill Newman <williamnewman@gmail.com>
@@ -25,11 +25,11 @@ if(isset($_GET['id']) && (int)$_GET['id'] > 0){#proper data must be on querystri
 //---end config area --------------------------------------------------
 
 $mySurvey = new Survey($myID);
-dumpDie($mySurvey);
+//dumpDie($mySurvey);
 
 if($mySurvey->isValid)
 {#only load data if record found
-	$config->titleTag = $mySurvey->Title . " surveys made with PHP & love!"; #overwrite PageTitle with Muffin info!
+	$config->titleTag = $mySurvey->Title . " surveys made with PHP & love!"; #overwrite PageTitle with survey info!
 }
 
 # END CONFIG AREA ---------------------------------------------------------- 
@@ -40,11 +40,13 @@ get_header(); #defaults to theme header or header_inc.php
 
 <?php
 if($mySurvey->isValid)
-{#records exist - show muffin!
+{#records exist - show survey!
 //create survey object?
  
     echo '<p>Title: ' . $mySurvey->Title . '</p>';
     echo '<p>Description: ' . $mySurvey->Description . '</p>';
+    //dumpDie($mySurvey->Questions);
+    echo '<p>Question 1: ' . $mySurvey->Questions[1] . '</p>';
     
 }else{//no such survey!
     echo '<div align="center">What! No such survey? There must be a mistake!!</div>';
@@ -96,12 +98,10 @@ class Survey
 
         if(mysqli_num_rows($result) > 0)
         {#records exist - process
-               //$this->isValid = true;	
+	
                while ($row = mysqli_fetch_assoc($result))
                {
 
-                   //$this->Title = dbOut($row['Title']);
-                   //$this->Description = dbOut($row['Description']);
                    $this->Questions[] = new Question($row['QuestionID'],dbOut($row['Question']),dbOut($row['Description']));
 
                }
